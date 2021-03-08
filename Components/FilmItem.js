@@ -2,6 +2,7 @@
 
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+import { getImageFromApi } from "../api/TMBDApi";
 
 export default function FilmItem(props) {
   const { poster_path, title, vote, overview, release_date } = props.film;
@@ -9,9 +10,7 @@ export default function FilmItem(props) {
     <View style={styles.main_container}>
       <Image
         style={styles.image}
-        source={{
-          uri: poster_path,
-        }}
+        source={{ uri: getImageFromApi(poster_path) }}
       />
       <View style={styles.content_container}>
         <View style={styles.header_container}>
