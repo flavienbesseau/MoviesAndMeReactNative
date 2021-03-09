@@ -1,13 +1,20 @@
 // Components/FilmItem.js
 
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { getImageFromApi } from "../api/TMBDApi";
 
+/*On peut pas mettre d'évenement sur les view, c'est limité...
+donc on importe Touchable Opacity (pour le onclick)*/
+
 export default function FilmItem(props) {
-  const { poster_path, title, vote, overview, release_date } = props.film;
+  const { poster_path, title, vote, overview, release_date, id } = props.film;
+  const { displayDetailsForFilm } = props;
   return (
-    <View style={styles.main_container}>
+    <TouchableOpacity
+      style={styles.main_container}
+      onPress={() => displayDetailsForFilm(id)}
+    >
       <Image
         style={styles.image}
         source={{ uri: getImageFromApi(poster_path) }}
@@ -27,7 +34,7 @@ export default function FilmItem(props) {
           <Text style={styles.date_text}>Sorti le {release_date}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

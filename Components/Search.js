@@ -29,12 +29,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   main_container: {
-    marginTop: 30,
     flex: 1,
   },
 });
 
-export default function Search() {
+export default function Search({ navigation }) {
   const searchedText = useRef("");
   const page = useRef(0);
   const totalPages = useRef(0);
@@ -75,6 +74,10 @@ export default function Search() {
     searchedText.current = text;
   };
 
+  const displayDetailsForFilm = (idFilm) => {
+    navigation.navigate("FilmDetail", { idFilm });
+  };
+
   const displayLoading = () => {
     if (isLoading) {
       return (
@@ -102,7 +105,9 @@ export default function Search() {
       <FlatList
         keyExtractor={(item) => item.id.toString()}
         data={films}
-        renderItem={({ item }) => <FilmItem film={item} />}
+        renderItem={({ item }) => (
+          <FilmItem film={item} displayDetailsForFilm={displayDetailsForFilm} />
+        )}
         onEndReachedThreshold={0.5}
         onEndReached={() => {
           if (page.current < totalPages.current) {
